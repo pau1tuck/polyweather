@@ -1,4 +1,4 @@
-import axios, { Axios } from "axios";
+import fetch, { Response } from "node-fetch";
 
 const API_KEY = process.env.API_KEY || null;
 
@@ -10,13 +10,13 @@ const LONGITUDE = process.env.LONGITUDE || "0.1257";
 process.stdout.write("Hello, World!");
 let weather_data = null;
 
-const fetch_weather_data = async (): Promise<void> => {
-    try {
-        const response = await __(
-            "https://open-meteo.com/en/docs#latitude=20.1468&longitude=99.8526&hourly=temperature_2m,relativehumidity_2m,rain,showers,weathercode,cloudcover,visibility&daily=sunrise,sunset&current_weather=true&timezone=Asia%2FBangkok"
-        );
-        weather_data = await response.json();
-    } catch (error) {
-        throw new Error("Failed to retrieve weather data from server");
-    }
+const fetch_weather_data = () => {
+    fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${LATITUDE}&longitude=${LONGITUDE}&hourly=temperature_2m,relativehumidity_2m,rain,weathercode,cloudcover,visibility,windspeed_180m,is_day&daily=sunrise,sunset&current_weather=true&timezone=Asia%2FBangkok`
+    )
+        .then((response: Response) => response.json())
+        .then((data: any) => console.log(data))
+        .catch((err: Error) => console.log("Unable to retrieve weather data from server:", err));
 };
+
+fetch_weather_data();
