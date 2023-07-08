@@ -1,4 +1,5 @@
 import axios from "axios";
+import fs from "fs";
 
 const options = {
     method: "GET",
@@ -9,26 +10,32 @@ const options = {
         country: process.env.COUNTRY || "England",
     },
     headers: {
-        "X-RapidAPI-Key": "ef6b437320msha45a8942110aac3p10b0abjsnf5d68535cfba",
+        "X-RapidAPI-Key": "",
         "X-RapidAPI-Host": "weather-by-api-ninjas.p.rapidapi.com",
     },
 };
 
 // Validate Rapid API key
 if (options.headers["X-RapidAPI-Key"] === null) {
-    console.log("Invalid API key. Register at https://rapidapi.com/apininjas/api/weather-by-api-ninjas/");
+    console.error("Invalid API key. Register at https://rapidapi.com/apininjas/api/weather-by-api-ninjas/");
     process.exit();
 }
-
-let weather_data = null;
 
 const get_weather_data = async () => {
     console.log("Loading...");
     try {
         const response = await axios.request(options);
         console.log("Response status:", response.status);
-        weather_data = response.data;
-        console.log(weather_data);
+        const data = response.data;
+        console.log(data);
+        const jsonData = JSON.stringify(data);
+        fs.writeFile("weather.json", jsonData, err => {
+            if (err) {
+                console.error("Error writing API data to weather.json file:", err);
+            } else {
+                console.log("File weather.json written successfully.");
+            }
+        });
     } catch (error) {
         console.error(error);
     }
