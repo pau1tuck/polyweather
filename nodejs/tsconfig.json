@@ -5,7 +5,7 @@
         "lib": [
             "es2021"
         ],
-        "baseDir": ".",
+        "baseUrl": ".",
         "outDir": "./dist",
         "rootDir": "./src",
         "strict": true,
@@ -36,7 +36,11 @@
             "@/*": [
                 "./src/*"
             ]
-        }
+        },
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types"
+        ],
     },
     "include": [
         "src/**/*.ts",
