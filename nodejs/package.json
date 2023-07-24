@@ -1,6 +1,6 @@
 {
   "name": "polyweather",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "description": "A weather applet for Polybar",
   "authors": {
@@ -14,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "dev": "concurrently \"tsc -w\" \"nodemon dist/index.js\"",
+    "dev": "tsc && node dist/index.js",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,16 +23,12 @@
   "devDependencies": {
     "@types/got": "^9.6.12",
     "@types/node": "^20.4.1",
-    "concurrently": "^8.2.0",
     "dotenv": "^16.3.1",
     "ts-node": "^10.9.1",
     "tslib": "^2.6.0",
-    "tsnodemon": "^1.2.2",
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "axios": "^1.4.0",
-    "got": "^13.0.0",
-    "node-fetch": "^3.3.1"
+    "axios": "^1.4.0"
   }
 }
